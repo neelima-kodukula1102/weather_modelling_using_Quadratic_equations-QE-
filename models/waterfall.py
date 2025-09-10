@@ -1,23 +1,22 @@
 import matplotlib.pyplot as plt
 
-a, b, c = -0.2, 1.5, 24
-
+# Quadratic weather function
 def quadratic_weather_model(t):
+    a, b, c = -0.2, 1.5, 24
     return a*t**2 + b*t + c
 
-print("=== WATERFALL MODEL ===")
-times = list(range(0, 25, 6))
-temps = []
-for t in times:
-    temp = quadratic_weather_model(t)
-    temps.append(temp)
-    print(f"Time: {t} hrs -> Predicted Temp: {temp:.2f}°C")
+hours = list(range(0, 25, 6))  # 0,6,12,18,24
+temps = [quadratic_weather_model(h) for h in hours]
 
-plt.plot(times, temps, marker='o', color='blue', label='Waterfall Temp')
+plt.plot(hours, temps, marker='o', linestyle='-', color='blue')
 plt.title("Waterfall Model Temperature Prediction")
 plt.xlabel("Time (hrs)")
 plt.ylabel("Temperature (°C)")
 plt.grid(True)
-plt.legend()
-plt.savefig("waterfall_graph.png")
+plt.savefig("waterfall_model.png")  # saves the plot
 plt.show()
+
+# Print values like before
+print("=== WATERFALL MODEL ===")
+for h, temp in zip(hours, temps):
+    print(f"Time: {h} hrs -> Temp: {temp:.2f}°C")

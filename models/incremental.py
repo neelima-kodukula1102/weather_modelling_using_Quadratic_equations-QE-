@@ -1,20 +1,22 @@
 import matplotlib.pyplot as plt
 
-a, b, c = -0.2, 1.5, 24
-
+# Quadratic weather function
 def quadratic_weather_model(t):
+    a, b, c = -0.2, 1.5, 24
     return a*t**2 + b*t + c
 
-print("=== INCREMENTAL MODEL ===")
-increments = [0, 8, 16, 24]
-for inc in range(1, 4):
-    print(f"Increment {inc}:")
-    temps = []
-    for t in increments:
-        temp = quadratic_weather_model(t)
-        temps.append(temp)
-        print(f"Time: {t} hrs -> Temp: {temp:.2f}°C")
-    plt.plot(increments, temps, marker='o', label=f"Increment {inc}")
+hours = list(range(0, 25, 6))  # every 6 hours
+colors = ['blue', 'green', 'red']  # 3 increments
+
+plt.figure(figsize=(8,5))
+print("\n=== INCREMENTAL MODE ===")
+
+for inc in range(3):
+    temps = [quadratic_weather_model(h) + inc*2 for h in hours]  # small offset per increment
+    plt.plot(hours, temps, marker='d', linestyle='-', color=colors[inc], label=f"Increment {inc+1}")
+    print(f"Increment {inc+1}:")
+    for h, temp in zip(hours, temps):
+        print(f"Time: {h} hrs -> Temp: {temp:.2f}°C")
     print("---")
 
 plt.title("Incremental Model Temperature Prediction")
@@ -22,5 +24,6 @@ plt.xlabel("Time (hrs)")
 plt.ylabel("Temperature (°C)")
 plt.grid(True)
 plt.legend()
-plt.savefig("incremental_graph.png")
+plt.savefig("incremental_model.png")
 plt.show()
+
